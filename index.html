@@ -493,6 +493,39 @@
     </div>
   </div>
 
+  <!-- UNREGISTERED RFID POPUP MODAL -->
+  <div id="unregistered-rfid-modal" class="fixed inset-0 bg-[#1C140D]/80 backdrop-blur-sm hidden z-[60] flex items-center justify-center p-4">
+    <div class="bg-[#FBF7EE] rounded-2xl max-w-md w-full p-6 shadow-2xl relative border-2 border-rose-500">
+      <div class="flex flex-col items-center text-center space-y-3 mb-5">
+        <div class="w-14 h-14 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-3xl shadow-inner">
+          <i class="fa-solid fa-id-card-clip"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-[#1F1710]">New Card Detected!</h3>
+          <p class="text-xs text-[#7A6A55] mt-1">An unregistered RFID card was scanned at the smart locker.</p>
+        </div>
+        <div class="bg-rose-50 border border-rose-200 px-4 py-2 rounded-lg w-full mt-2">
+          <span class="block text-[10px] text-rose-800 font-bold uppercase tracking-wider mb-0.5">Card UID</span>
+          <span id="popup-unregistered-uid" class="font-mono text-lg font-bold text-rose-600">--</span>
+        </div>
+      </div>
+      
+      <div class="space-y-3 text-sm">
+        <button onclick="registerPopupAsUser()" class="w-full bg-[#2F5D48] hover:bg-[#234B3B] text-white font-bold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Register as New User</span>
+        </button>
+        <button onclick="registerPopupAsBook()" class="w-full bg-[#B08D3F] hover:bg-[#8A6B22] text-white font-bold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+          <i class="fa-solid fa-book-medical"></i>
+          <span>Register as New Book</span>
+        </button>
+        <button onclick="ignoreUnregisteredCard()" class="w-full bg-[#EFE6D2] hover:bg-[#E3D5B0] text-[#5C4D3D] font-bold py-2.5 rounded-xl transition">
+          Ignore
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ADD / EDIT BOOK MODAL -->
   <div id="book-modal" class="fixed inset-0 bg-[#1C140D]/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
     <div class="bg-[#FBF7EE] rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
@@ -585,6 +618,13 @@
         renderMobileLockers();
         populateRfidDropdown();
         checkBackendHealth();
+        
+        // Trigger popup if unregistered card exists
+        if (state.hardware && state.hardware.unregisteredCardUid && state.hardware.unregisteredCardUid !== 'None') {
+          showUnregisteredModal(state.hardware.unregisteredCardUid);
+        } else {
+          closeUnregisteredModal();
+        }
       } catch (err) {
         console.error('Data refresh error:', err);
         checkBackendHealth();
@@ -1013,11 +1053,12 @@
       }
     }
 
-    async function openAddUserPrompt() {
+    async function openAddUserPrompt(prefillRfid = '') {
       const name = prompt('User Name:');
-      const rfid = prompt('RFID Tag UID (e.g. RF-12345):');
+      const rfid = prompt('RFID Tag UID (e.g. RF-12345):', prefillRfid);
       if (name && rfid) {
         await window.apiClient.createUser({ name, rfid_tag: rfid });
+        await window.apiClient.syncHardware({ action: 'CLEAR_UNREGISTERED' }); // Clear popup flag
         await refreshAllData();
       }
     }
@@ -1083,6 +1124,50 @@
       window.apiClient.setBaseUrl(url);
       closeApiConfigModal();
       refreshAllData();
+    }
+
+    // ==========================================
+    // POPUP LOGIC
+    // ==========================================
+    let isUnregisteredModalOpen = false;
+
+    function showUnregisteredModal(uid) {
+      if (isUnregisteredModalOpen) return;
+      isUnregisteredModalOpen = true;
+      document.getElementById('popup-unregistered-uid').innerText = uid;
+      document.getElementById('unregistered-rfid-modal').classList.remove('hidden');
+    }
+
+    function closeUnregisteredModal() {
+      if (!isUnregisteredModalOpen) return;
+      isUnregisteredModalOpen = false;
+      document.getElementById('unregistered-rfid-modal').classList.add('hidden');
+    }
+
+    function registerPopupAsUser() {
+      const uid = document.getElementById('popup-unregistered-uid').innerText;
+      closeUnregisteredModal();
+      openAddUserPrompt(uid);
+    }
+
+    function registerPopupAsBook() {
+      const uid = document.getElementById('popup-unregistered-uid').innerText;
+      closeUnregisteredModal();
+      openBookModal();
+      setTimeout(() => {
+        document.getElementById('form-book-rfid').value = uid;
+      }, 100);
+      window.apiClient.syncHardware({ action: 'CLEAR_UNREGISTERED' }).then(refreshAllData);
+    }
+
+    async function ignoreUnregisteredCard() {
+      closeUnregisteredModal();
+      try {
+        await window.apiClient.syncHardware({ action: 'CLEAR_UNREGISTERED' });
+        await refreshAllData();
+      } catch(e) {
+        console.error('Failed to ignore card', e);
+      }
     }
 
     // Initialize
