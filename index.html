@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Reading Room — Smart Book Exchange Locker System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Source Serif 4', Georgia, serif; }
+    .font-display { font-family: 'Fraunces', 'Cormorant Garamond', Georgia, serif; font-optical-sizing: auto; }
+    .font-plate { font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: 0.06em; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .paper-texture {
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(176,141,63,0.05), transparent 45%),
+        radial-gradient(circle at 80% 60%, rgba(47,93,72,0.05), transparent 50%);
+    }
+    .home-wallpaper {
+      background-image: linear-gradient(180deg, rgba(239,230,210,0.55), rgba(239,230,210,0.90) 55%, rgba(239,230,210,0.97)), url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22220%22%20height%3D%22240%22%3E%0A%3Crect%20width%3D%22220%22%20height%3D%22240%22%20fill%3D%22%23EFE6D2%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%2214%22%20width%3D%2210%22%20height%3D%2282%22%20fill%3D%22%232F5D48%22/%3E%3Crect%20x%3D%220%22%20y%3D%2218%22%20width%3D%2210%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2212%22%20y%3D%2214%22%20width%3D%2214%22%20height%3D%2282%22%20fill%3D%22%238B3A3A%22/%3E%3Crect%20x%3D%2212%22%20y%3D%2218%22%20width%3D%2214%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2228%22%20y%3D%2214%22%20width%3D%228%22%20height%3D%2282%22%20fill%3D%22%23B08D3F%22/%3E%3Crect%20x%3D%2228%22%20y%3D%2218%22%20width%3D%228%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2238%22%20y%3D%2214%22%20width%3D%2216%22%20height%3D%2282%22%20fill%3D%22%235C3A21%22/%3E%3Crect%20x%3D%2238%22%20y%3D%2218%22%20width%3D%2216%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2256%22%20y%3D%2214%22%20width%3D%2212%22%20height%3D%2282%22%20fill%3D%22%233D7259%22/%3E%3Crect%20x%3D%2256%22%20y%3D%2218%22%20width%3D%2212%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2270%22%20y%3D%2214%22%20width%3D%229%22%20height%3D%2282%22%20fill%3D%22%237A2F2F%22/%3E%3Crect%20x%3D%2270%22%20y%3D%2218%22%20width%3D%229%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2281%22%20y%3D%2214%22%20width%3D%2215%22%20height%3D%2282%22%20fill%3D%22%23C9A227%22/%3E%3Crect%20x%3D%2281%22%20y%3D%2218%22%20width%3D%2215%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2298%22%20y%3D%2214%22%20width%3D%2211%22%20height%3D%2282%22%20fill%3D%22%234E3A28%22/%3E%3Crect%20x%3D%2298%22%20y%3D%2218%22%20width%3D%2211%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22111%22%20y%3D%2214%22%20width%3D%2210%22%20height%3D%2282%22%20fill%3D%22%23234B3B%22/%3E%3Crect%20x%3D%22111%22%20y%3D%2218%22%20width%3D%2210%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22123%22%20y%3D%2214%22%20width%3D%2214%22%20height%3D%2282%22%20fill%3D%22%236B4A30%22/%3E%3Crect%20x%3D%22123%22%20y%3D%2218%22%20width%3D%2214%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22139%22%20y%3D%2214%22%20width%3D%228%22%20height%3D%2282%22%20fill%3D%22%232F5D48%22/%3E%3Crect%20x%3D%22139%22%20y%3D%2218%22%20width%3D%228%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22149%22%20y%3D%2214%22%20width%3D%2216%22%20height%3D%2282%22%20fill%3D%22%238B3A3A%22/%3E%3Crect%20x%3D%22149%22%20y%3D%2218%22%20width%3D%2216%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22167%22%20y%3D%2214%22%20width%3D%2212%22%20height%3D%2282%22%20fill%3D%22%23B08D3F%22/%3E%3Crect%20x%3D%22167%22%20y%3D%2218%22%20width%3D%2212%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22181%22%20y%3D%2214%22%20width%3D%229%22%20height%3D%2282%22%20fill%3D%22%235C3A21%22/%3E%3Crect%20x%3D%22181%22%20y%3D%2218%22%20width%3D%229%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22192%22%20y%3D%2214%22%20width%3D%2215%22%20height%3D%2282%22%20fill%3D%22%233D7259%22/%3E%3Crect%20x%3D%22192%22%20y%3D%2218%22%20width%3D%2215%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22209%22%20y%3D%2214%22%20width%3D%2211%22%20height%3D%2282%22%20fill%3D%22%237A2F2F%22/%3E%3Crect%20x%3D%22209%22%20y%3D%2218%22%20width%3D%2211%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22100%22%20width%3D%22220%22%20height%3D%228%22%20fill%3D%22%233B2A1D%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22104%22%20width%3D%22220%22%20height%3D%222%22%20fill%3D%22%231C140D%22%20opacity%3D%220.4%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22128%22%20width%3D%2212%22%20height%3D%2282%22%20fill%3D%22%232F5D48%22/%3E%3Crect%20x%3D%220%22%20y%3D%22132%22%20width%3D%2212%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2214%22%20y%3D%22128%22%20width%3D%229%22%20height%3D%2282%22%20fill%3D%22%238B3A3A%22/%3E%3Crect%20x%3D%2214%22%20y%3D%22132%22%20width%3D%229%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2225%22%20y%3D%22128%22%20width%3D%2217%22%20height%3D%2282%22%20fill%3D%22%23B08D3F%22/%3E%3Crect%20x%3D%2225%22%20y%3D%22132%22%20width%3D%2217%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2244%22%20y%3D%22128%22%20width%3D%2210%22%20height%3D%2282%22%20fill%3D%22%235C3A21%22/%3E%3Crect%20x%3D%2244%22%20y%3D%22132%22%20width%3D%2210%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2256%22%20y%3D%22128%22%20width%3D%2213%22%20height%3D%2282%22%20fill%3D%22%233D7259%22/%3E%3Crect%20x%3D%2256%22%20y%3D%22132%22%20width%3D%2213%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2271%22%20y%3D%22128%22%20width%3D%228%22%20height%3D%2282%22%20fill%3D%22%237A2F2F%22/%3E%3Crect%20x%3D%2271%22%20y%3D%22132%22%20width%3D%228%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2281%22%20y%3D%22128%22%20width%3D%2216%22%20height%3D%2282%22%20fill%3D%22%23C9A227%22/%3E%3Crect%20x%3D%2281%22%20y%3D%22132%22%20width%3D%2216%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2299%22%20y%3D%22128%22%20width%3D%2211%22%20height%3D%2282%22%20fill%3D%22%234E3A28%22/%3E%3Crect%20x%3D%2299%22%20y%3D%22132%22%20width%3D%2211%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22112%22%20y%3D%22128%22%20width%3D%2214%22%20height%3D%2282%22%20fill%3D%22%23234B3B%22/%3E%3Crect%20x%3D%22112%22%20y%3D%22132%22%20width%3D%2214%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22128%22%20y%3D%22128%22%20width%3D%2212%22%20height%3D%2282%22%20fill%3D%22%236B4A30%22/%3E%3Crect%20x%3D%22128%22%20y%3D%22132%22%20width%3D%2212%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22142%22%20y%3D%22128%22%20width%3D%229%22%20height%3D%2282%22%20fill%3D%22%232F5D48%22/%3E%3Crect%20x%3D%22142%22%20y%3D%22132%22%20width%3D%229%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22153%22%20y%3D%22128%22%20width%3D%2217%22%20height%3D%2282%22%20fill%3D%22%238B3A3A%22/%3E%3Crect%20x%3D%22153%22%20y%3D%22132%22%20width%3D%2217%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22172%22%20y%3D%22128%22%20width%3D%2210%22%20height%3D%2282%22%20fill%3D%22%23B08D3F%22/%3E%3Crect%20x%3D%22172%22%20y%3D%22132%22%20width%3D%2210%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22184%22%20y%3D%22128%22%20width%3D%2213%22%20height%3D%2282%22%20fill%3D%22%235C3A21%22/%3E%3Crect%20x%3D%22184%22%20y%3D%22132%22%20width%3D%2213%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22199%22%20y%3D%22128%22%20width%3D%228%22%20height%3D%2282%22%20fill%3D%22%233D7259%22/%3E%3Crect%20x%3D%22199%22%20y%3D%22132%22%20width%3D%228%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22209%22%20y%3D%22128%22%20width%3D%2216%22%20height%3D%2282%22%20fill%3D%22%237A2F2F%22/%3E%3Crect%20x%3D%22209%22%20y%3D%22132%22%20width%3D%2216%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22100%22%20width%3D%22220%22%20height%3D%228%22%20fill%3D%22%233B2A1D%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22104%22%20width%3D%22220%22%20height%3D%222%22%20fill%3D%22%231C140D%22%20opacity%3D%220.4%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22128%22%20width%3D%2212%22%20height%3D%2282%22%20fill%3D%22%232F5D48%22/%3E%3Crect%20x%3D%220%22%20y%3D%22132%22%20width%3D%2212%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2214%22%20y%3D%22128%22%20width%3D%229%22%20height%3D%2282%22%20fill%3D%22%238B3A3A%22/%3E%3Crect%20x%3D%2214%22%20y%3D%22132%22%20width%3D%229%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2225%22%20y%3D%22128%22%20width%3D%2217%22%20height%3D%2282%22%20fill%3D%22%23B08D3F%22/%3E%3Crect%20x%3D%2225%22%20y%3D%22132%22%20width%3D%2217%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2244%22%20y%3D%22128%22%20width%3D%2210%22%20height%3D%2282%22%20fill%3D%22%235C3A21%22/%3E%3Crect%20x%3D%2244%22%20y%3D%22132%22%20width%3D%2210%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2256%22%20y%3D%22128%22%20width%3D%2213%22%20height%3D%2282%22%20fill%3D%22%233D7259%22/%3E%3Crect%20x%3D%2256%22%20y%3D%22132%22%20width%3D%2213%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2271%22%20y%3D%22128%22%20width%3D%228%22%20height%3D%2282%22%20fill%3D%22%237A2F2F%22/%3E%3Crect%20x%3D%2271%22%20y%3D%22132%22%20width%3D%228%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2281%22%20y%3D%22128%22%20width%3D%2216%22%20height%3D%2282%22%20fill%3D%22%23C9A227%22/%3E%3Crect%20x%3D%2281%22%20y%3D%22132%22%20width%3D%2216%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2299%22%20y%3D%22128%22%20width%3D%2211%22%20height%3D%2282%22%20fill%3D%22%234E3A28%22/%3E%3Crect%20x%3D%2299%22%20y%3D%22132%22%20width%3D%2211%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22112%22%20y%3D%22128%22%20width%3D%2214%22%20height%3D%2282%22%20fill%3D%22%23234B3B%22/%3E%3Crect%20x%3D%22112%22%20y%3D%22132%22%20width%3D%2214%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22128%22%20y%3D%22128%22%20width%3D%2212%22%20height%3D%2282%22%20fill%3D%22%236B4A30%22/%3E%3Crect%20x%3D%22128%22%20y%3D%22132%22%20width%3D%2212%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22142%22%20y%3D%22128%22%20width%3D%229%22%20height%3D%2282%22%20fill%3D%22%232F5D48%22/%3E%3Crect%20x%3D%22142%22%20y%3D%22132%22%20width%3D%229%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22153%22%20y%3D%22128%22%20width%3D%2217%22%20height%3D%2282%22%20fill%3D%22%238B3A3A%22/%3E%3Crect%20x%3D%22153%22%20y%3D%22132%22%20width%3D%2217%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22172%22%20y%3D%22128%22%20width%3D%2210%22%20height%3D%2282%22%20fill%3D%22%23B08D3F%22/%3E%3Crect%20x%3D%22172%22%20y%3D%22132%22%20width%3D%2210%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22184%22%20y%3D%22128%22%20width%3D%2213%22%20height%3D%2282%22%20fill%3D%22%235C3A21%22/%3E%3Crect%20x%3D%22184%22%20y%3D%22132%22%20width%3D%2213%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22199%22%20y%3D%22128%22%20width%3D%228%22%20height%3D%2282%22%20fill%3D%22%233D7259%22/%3E%3Crect%20x%3D%22199%22%20y%3D%22132%22%20width%3D%228%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22209%22%20y%3D%22128%22%20width%3D%2216%22%20height%3D%2282%22%20fill%3D%22%237A2F2F%22/%3E%3Crect%20x%3D%22209%22%20y%3D%22132%22%20width%3D%2216%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22100%22%20width%3D%22220%22%20height%3D%228%22%20fill%3D%22%233B2A1D%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22104%22%20width%3D%22220%22%20height%3D%222%22%20fill%3D%22%231C140D%22%20opacity%3D%220.4%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22128%22%20width%3D%2212%22%20height%3D%2282%22%20fill%3D%22%232F5D48%22/%3E%3Crect%20x%3D%220%22%20y%3D%22132%22%20width%3D%2212%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2214%22%20y%3D%22128%22%20width%3D%229%22%20height%3D%2282%22%20fill%3D%22%238B3A3A%22/%3E%3Crect%20x%3D%2214%22%20y%3D%22132%22%20width%3D%229%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2225%22%20y%3D%22128%22%20width%3D%2217%22%20height%3D%2282%22%20fill%3D%22%23B08D3F%22/%3E%3Crect%20x%3D%2225%22%20y%3D%22132%22%20width%3D%2217%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2244%22%20y%3D%22128%22%20width%3D%2210%22%20height%3D%2282%22%20fill%3D%22%235C3A21%22/%3E%3Crect%20x%3D%2244%22%20y%3D%22132%22%20width%3D%2210%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2256%22%20y%3D%22128%22%20width%3D%2213%22%20height%3D%2282%22%20fill%3D%22%233D7259%22/%3E%3Crect%20x%3D%2256%22%20y%3D%22132%22%20width%3D%2213%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2271%22%20y%3D%22128%22%20width%3D%228%22%20height%3D%2282%22%20fill%3D%22%237A2F2F%22/%3E%3Crect%20x%3D%2271%22%20y%3D%22132%22%20width%3D%228%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2281%22%20y%3D%22128%22%20width%3D%2216%22%20height%3D%2282%22%20fill%3D%22%23C9A227%22/%3E%3Crect%20x%3D%2281%22%20y%3D%22132%22%20width%3D%2216%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2299%22%20y%3D%22128%22%20width%3D%2211%22%20height%3D%2282%22%20fill%3D%22%234E3A28%22/%3E%3Crect%20x%3D%2299%22%20y%3D%22132%22%20width%3D%2211%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22112%22%20y%3D%22128%22%20width%3D%2214%22%20height%3D%2282%22%20fill%3D%22%23234B3B%22/%3E%3Crect%20x%3D%22112%22%20y%3D%22132%22%20width%3D%2214%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22128%22%20y%3D%22128%22%20width%3D%2212%22%20height%3D%2282%22%20fill%3D%22%236B4A30%22/%3E%3Crect%20x%3D%22128%22%20y%3D%22132%22%20width%3D%2212%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22142%22%20y%3D%22128%22%20width%3D%229%22%20height%3D%2282%22%20fill%3D%22%232F5D48%22/%3E%3Crect%20x%3D%22142%22%20y%3D%22132%22%20width%3D%229%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22153%22%20y%3D%22128%22%20width%3D%2217%22%20height%3D%2282%22%20fill%3D%22%238B3A3A%22/%3E%3Crect%20x%3D%22153%22%20y%3D%22132%22%20width%3D%2217%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22172%22%20y%3D%22128%22%20width%3D%2210%22%20height%3D%2282%22%20fill%3D%22%23B08D3F%22/%3E%3Crect%20x%3D%22172%22%20y%3D%22132%22%20width%3D%2210%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22184%22%20y%3D%22128%22%20width%3D%2213%22%20height%3D%2282%22%20fill%3D%22%235C3A21%22/%3E%3Crect%20x%3D%22184%22%20y%3D%22132%22%20width%3D%2213%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22199%22%20y%3D%22128%22%20width%3D%228%22%20height%3D%2282%22%20fill%3D%22%233D7259%22/%3E%3Crect%20x%3D%22199%22%20y%3D%22132%22%20width%3D%228%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22209%22%20y%3D%22128%22%20width%3D%2216%22%20height%3D%2282%22%20fill%3D%22%237A2F2F%22/%3E%3Crect%20x%3D%22209%22%20y%3D%22132%22%20width%3D%2216%22%20height%3D%222%22%20fill%3D%22%23F3E7C4%22%20opacity%3D%220.5%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22214%22%20width%3D%22220%22%20height%3D%228%22%20fill%3D%22%233B2A1D%22/%3E%0A%3Crect%20x%3D%220%22%20y%3D%22218%22%20width%3D%22220%22%20height%3D%222%22%20fill%3D%22%231C140D%22%20opacity%3D%220.4%22/%3E%0A%3C/svg%3E");
+      background-size: auto, 176px 192px;
+      background-repeat: repeat, repeat;
+      background-position: top left, top left;
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #EFE6D2; }
+    ::-webkit-scrollbar-thumb { background: #B08D3F; border-radius: 8px; }
+  </style>
+</head>
+<body class="bg-[#1C140D] text-[#2B2420] font-sans min-h-screen paper-texture">
+
+  <!-- TOP APP SWITCHER & BACKEND STATUS HEADER -->
+  <header class="bg-[#241A12] text-white border-b-2 border-[#B08D3F]/40 py-3 px-6 sticky top-0 z-50 flex flex-wrap justify-between items-center shadow-lg">
+    <div class="flex items-center space-x-3 mb-2 sm:mb-0">
+      <div class="bg-[#2F5D48] p-2 rounded-lg text-[#F3E7C4] border border-[#B08D3F]/50">
+        <i class="fa-solid fa-book-atlas text-xl"></i>
+      </div>
+      <div>
+        <h1 class="font-display font-semibold text-lg leading-tight tracking-wide">The Reading Room</h1>
+        <p class="text-[11px] text-[#B08D3F] font-plate uppercase">Smart Book Exchange Locker System</p>
+      </div>
+    </div>
+    
+    <div class="flex flex-wrap items-center gap-3">
+      <!-- Backend Connection Status Pill -->
+      <button onclick="openApiConfigModal()" id="backend-status-pill" class="flex items-center space-x-2 bg-[#1C140D] px-3 py-1.5 rounded-xl border border-[#4E3A28] text-xs font-mono text-[#EFE6D2] hover:border-[#C9A227] transition shadow">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" id="backend-status-dot"></span>
+        <span id="backend-status-text">Connecting...</span>
+        <i class="fa-solid fa-sliders text-[#A69477] ml-1"></i>
+      </button>
+
+      <!-- View Switcher Tabs -->
+      <div class="flex items-center space-x-1 bg-[#3B2A1D] p-1 rounded-xl border border-[#4E3A28] text-xs font-semibold">
+        <button id="btn-view-mobile" onclick="switchMainView('mobile')" class="px-3.5 py-1.5 rounded-lg text-white bg-[#2F5D48] transition shadow">
+          <i class="fa-solid fa-mobile-screen mr-1.5"></i> Mobile App
+        </button>
+        <button id="btn-view-admin" onclick="switchMainView('admin')" class="px-3.5 py-1.5 rounded-lg text-[#A69477] hover:text-white transition">
+          <i class="fa-solid fa-desktop mr-1.5"></i> Admin Dashboard
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 1. MOBILE USER INTERFACE -->
+  <!-- ========================================================================= -->
+  <main id="view-mobile" class="py-8 px-4 flex justify-center items-center min-h-[calc(100vh-65px)] bg-[#1C140D]">
+    <div class="w-full max-w-[390px] h-[780px] bg-[#241A12] rounded-[45px] p-3 shadow-2xl border-4 border-[#4E3A28] relative flex flex-col">
+      <div class="w-32 h-5 bg-[#241A12] rounded-b-2xl mx-auto absolute top-3 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center">
+        <div class="w-3 h-3 bg-[#3B2A1D] rounded-full mr-2"></div>
+        <div class="w-10 h-1 bg-[#3B2A1D] rounded-full"></div>
+      </div>
+
+      <div class="bg-[#EFE6D2] w-full h-full rounded-[35px] overflow-hidden flex flex-col relative pt-6">
+        <header class="bg-[#234B3B] text-white px-4 py-3.5 flex justify-between items-center shadow-md">
+          <div class="flex items-center space-x-3">
+            <button id="mobile-back-btn" onclick="showMobileScreen('home')" class="hidden text-white">
+              <i class="fa-solid fa-arrow-left text-lg"></i>
+            </button>
+            <h2 id="mobile-title" class="font-display font-semibold text-base tracking-wide">The Reading Room</h2>
+          </div>
+          <div class="flex items-center space-x-3">
+            <a href="tel:308" class="text-white hover:text-[#C99A8D] transition" title="Helpline: 308">
+              <i class="fa-solid fa-phone-volume"></i>
+            </a>
+            <button onclick="showMobileScreen('notifications')" class="relative text-white hover:text-[#D9BB57] transition">
+              <i class="fa-solid fa-bell"></i>
+              <span id="notif-badge" class="hidden absolute -top-1.5 -right-2 bg-[#8B3A3A] text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="flex-grow overflow-y-auto p-4 scrollbar-hide">
+          <div id="mob-screen-home" class="space-y-4 home-wallpaper -m-4 p-4 rounded-b-[27px]">
+            <div class="bg-[#FBF7EE] rounded-2xl p-5 text-center shadow-sm border border-[#E3D5B0]">
+              <h3 class="font-display text-2xl font-semibold text-[#2B2420]">Welcome!</h3>
+              <p class="text-xs text-[#7A6A55] mt-1 font-medium">Exchange Books, Share Knowledge</p>
+              <div class="my-4 flex justify-center items-center space-x-2 py-3 bg-[#E3ECE4]/50 rounded-xl">
+                <i class="fa-solid fa-book-bookmark text-4xl text-[#2F5D48]"></i>
+                <i class="fa-solid fa-arrows-rotate text-2xl text-[#C9A227]"></i>
+                <i class="fa-solid fa-scroll text-4xl text-[#2F5D48]"></i>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <button onclick="showMobileScreen('rfid')" class="w-full bg-[#2F5D48] hover:bg-[#234B3B] text-white font-semibold py-3 px-4 rounded-xl shadow-md flex items-center">
+                <div class="bg-[#F3E7C4] text-[#5C3A21] w-9 h-9 flex items-center justify-center rounded-full mr-3 shadow-inner flex-shrink-0"><i class="fa-solid fa-id-badge text-base"></i></div>
+                <span>Scan RFID Card</span>
+              </button>
+              <button onclick="showMobileScreen('exchange')" class="w-full bg-[#B08D3F] hover:bg-[#8A6B22] text-white font-semibold py-3 px-4 rounded-xl shadow-md flex items-center">
+                <div class="bg-[#F3E7C4] text-[#5C3A21] w-9 h-9 flex items-center justify-center rounded-full mr-3 shadow-inner flex-shrink-0"><i class="fa-solid fa-book-open-reader text-base"></i></div>
+                <span>View Available Books</span>
+              </button>
+              <button onclick="showMobileScreen('transactions')" class="w-full bg-[#5C3A21] hover:bg-[#4A2E1A] text-white font-semibold py-3 px-4 rounded-xl shadow-md flex items-center">
+                <div class="bg-[#F3E7C4] text-[#5C3A21] w-9 h-9 flex items-center justify-center rounded-full mr-3 shadow-inner flex-shrink-0"><i class="fa-solid fa-right-left text-base"></i></div>
+                <span>My Transactions</span>
+              </button>
+              <button onclick="showMobileScreen('help')" class="w-full bg-[#C9A227] hover:bg-[#B08D3F] text-white font-semibold py-3 px-4 rounded-xl shadow-md flex items-center">
+                <div class="bg-[#F3E7C4] text-[#5C3A21] w-9 h-9 flex items-center justify-center rounded-full mr-3 shadow-inner flex-shrink-0"><i class="fa-solid fa-book-bible text-base"></i></div>
+                <span>Help / Instructions</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="mob-screen-rfid" class="hidden space-y-6 text-center pt-4">
+            <div class="bg-[#FBF7EE] rounded-2xl p-6 shadow-sm border border-[#E3D5B0]">
+              <h3 class="font-display text-lg font-semibold text-[#2B2420] mb-6">RFID Authentication</h3>
+              <div class="w-28 h-28 mx-auto flex items-center justify-center bg-[#E3ECE4] rounded-full border-2 border-[#BFD3C4] mb-6">
+                <i class="fa-solid fa-wifi text-4xl text-[#2F5D48] animate-pulse"></i>
+              </div>
+              <p class="text-xs text-[#5C4D3D] font-medium mb-4">Select or tap RFID card to authenticate:</p>
+              <select id="rfid-select-card" class="w-full p-2.5 border border-[#E3D5B0] rounded-xl text-xs bg-[#FBF7EE] font-mono mb-4" onchange="updateRfidUserCard()">
+              </select>
+              <div class="bg-[#EAF1EA] border border-[#8FB89C] rounded-xl p-4 flex items-center space-x-3 text-left">
+                <div class="bg-[#3D7259] text-white p-2 rounded-full"><i class="fa-solid fa-check text-lg"></i></div>
+                <div>
+                  <h4 class="font-bold text-[#16302A] text-sm">Access Granted</h4>
+                  <p id="rfid-auth-user" class="text-xs text-[#234B3B]">Welcome!</p>
+                </div>
+              </div>
+            </div>
+            <button onclick="showMobileScreen('exchange')" class="w-full bg-[#2F5D48] text-white font-semibold py-3 rounded-xl shadow">Proceed to Book Exchange</button>
+          </div>
+
+          <div id="mob-screen-exchange" class="hidden space-y-4">
+            <h3 class="font-bold text-[#2B2420] text-sm">Available Lockers</h3>
+            <p class="text-[10px] text-[#7A6A55] -mt-2">Tap a locker to view or return books.</p>
+            <div id="mobile-lockers-container" class="grid grid-cols-3 gap-3 mt-3"></div>
+            <div class="bg-[#FBF7EE] rounded-xl p-4 shadow-sm border border-[#E3D5B0] mt-2">
+              <span class="text-[11px] font-bold text-[#7A6A55] uppercase">Selected Locker: <span id="selected-locker-id">1</span></span>
+              <div id="selected-book-details" class="mt-2"></div>
+              <p class="text-[10px] text-[#A69477] mt-2"><i class="fa-solid fa-circle-info mr-1"></i>Borrowing period: <span id="borrow-period-label">7</span> day(s)</p>
+              <div class="space-y-2 mt-4">
+                <button onclick="actionBook('borrow')" class="w-full bg-[#2F5D48] text-white text-xs font-semibold py-2.5 rounded-lg shadow"><i class="fa-solid fa-download mr-1"></i> Borrow Book</button>
+                <button onclick="actionBook('return')" class="w-full bg-[#C9A227] text-white text-xs font-semibold py-2.5 rounded-lg shadow"><i class="fa-solid fa-upload mr-1"></i> Return Book</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="mob-screen-transactions" class="hidden space-y-3">
+            <h3 class="font-bold text-[#2B2420] text-sm">Borrowed &amp; Returned Books</h3>
+            <p class="text-[10px] text-[#7A6A55] -mt-2">Synchronized from REST API.</p>
+            <div id="mobile-tx-list" class="space-y-2"></div>
+          </div>
+
+          <div id="mob-screen-notifications" class="hidden space-y-3">
+            <h3 class="font-bold text-[#2B2420] text-sm">Notifications</h3>
+            <div id="mobile-notif-list" class="space-y-2"></div>
+          </div>
+
+          <div id="mob-screen-help" class="hidden space-y-4">
+            <div class="bg-[#FBF7EE] rounded-2xl p-4 shadow-sm border border-[#E3D5B0] space-y-3">
+              <h3 class="font-bold text-[#2B2420] text-sm">Instructions</h3>
+              <p class="text-xs text-[#5C4D3D]">1. Tap or select your RFID card on the scanner.</p>
+              <p class="text-xs text-[#5C4D3D]">2. Select an available locker compartment from the screen.</p>
+              <p class="text-xs text-[#5C4D3D]">3. Collect or return the book and close the door securely.</p>
+              <p class="text-xs text-[#5C4D3D]">4. Books can be borrowed for up to <span id="help-borrow-period">7</span> day(s).</p>
+            </div>
+            <div class="bg-[#FBF7EE] rounded-2xl p-4 shadow-sm border border-[#E3D5B0] space-y-2">
+              <h3 class="font-bold text-[#2B2420] text-sm">Helpline / Emergency</h3>
+              <a href="tel:308" class="flex items-center space-x-2 text-[#7A2F2F] font-bold text-sm">
+                <i class="fa-solid fa-phone-volume"></i><span>308</span>
+              </a>
+              <p class="text-[11px] text-[#7A6A55]">Call this number for locker malfunctions or urgent assistance.</p>
+            </div>
+          </div>
+        </div>
+
+        <nav class="bg-[#FBF7EE] border-t border-[#E3D5B0] py-2 px-4 flex justify-around text-[#7A6A55] text-xs">
+          <button onclick="showMobileScreen('home')" class="flex flex-col items-center"><i class="fa-solid fa-house"></i><span class="text-[10px]">Home</span></button>
+          <button onclick="showMobileScreen('exchange')" class="flex flex-col items-center"><i class="fa-solid fa-lock"></i><span class="text-[10px]">Lockers</span></button>
+          <button onclick="showMobileScreen('transactions')" class="flex flex-col items-center"><i class="fa-solid fa-clock-rotate-left"></i><span class="text-[10px]">History</span></button>
+          <button onclick="showMobileScreen('notifications')" class="flex flex-col items-center"><i class="fa-solid fa-bell"></i><span class="text-[10px]">Alerts</span></button>
+          <button onclick="showMobileScreen('help')" class="flex flex-col items-center"><i class="fa-solid fa-circle-question"></i><span class="text-[10px]">Help</span></button>
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 2. WEB ADMIN DASHBOARD -->
+  <!-- ========================================================================= -->
+  <main id="view-admin" class="hidden min-h-[calc(100vh-65px)] bg-[#EFE6D2] flex">
+    <aside class="w-60 bg-[#1C140D] text-[#D9C9A8] flex flex-col flex-shrink-0">
+      <div class="p-5 border-b border-[#3B2A1D] flex items-center space-x-3">
+        <i class="fa-solid fa-book-bookmark text-[#C9A227] text-xl"></i>
+        <div>
+          <span class="font-display font-semibold text-white text-sm tracking-wide block leading-tight">The Reading Room</span>
+          <span class="text-[9px] text-[#A69477] font-plate uppercase tracking-widest">Admin Registry</span>
+        </div>
+      </div>
+
+      <nav class="flex-grow p-4 space-y-1 text-xs font-medium">
+        <button onclick="showAdminTab('overview')" id="adm-nav-overview" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-[#2F5D48] text-white font-semibold">
+          <i class="fa-solid fa-chart-line w-5"></i><span>Dashboard</span>
+        </button>
+        <button onclick="showAdminTab('books')" id="adm-nav-books" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-[#3B2A1D] hover:text-white">
+          <i class="fa-solid fa-book w-5"></i><span>Books</span>
+        </button>
+        <button onclick="showAdminTab('lockers')" id="adm-nav-lockers" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-[#3B2A1D] hover:text-white">
+          <i class="fa-solid fa-cubes w-5"></i><span>Lockers</span>
+        </button>
+        <button onclick="showAdminTab('users')" id="adm-nav-users" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-[#3B2A1D] hover:text-white">
+          <i class="fa-solid fa-users w-5"></i><span>Users</span>
+        </button>
+        <button onclick="showAdminTab('rfid')" id="adm-nav-rfid" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-[#3B2A1D] hover:text-white">
+          <i class="fa-solid fa-id-card w-5"></i><span>RFID Cards</span>
+        </button>
+        <button onclick="showAdminTab('transactions')" id="adm-nav-transactions" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-[#3B2A1D] hover:text-white">
+          <i class="fa-solid fa-arrow-right-arrow-left w-5"></i><span>Transactions</span>
+        </button>
+        <button onclick="showAdminTab('notifications')" id="adm-nav-notifications" class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-[#3B2A1D] hover:text-white">
+          <span class="flex items-center space-x-3"><i class="fa-solid fa-bell w-5"></i><span>Notifications</span></span>
+          <span id="admin-notif-badge-nav" class="hidden bg-[#8B3A3A] text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+        </button>
+        <button onclick="showAdminTab('reports')" id="adm-nav-reports" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-[#3B2A1D] hover:text-white">
+          <i class="fa-solid fa-file-invoice w-5"></i><span>Reports</span>
+        </button>
+        <button onclick="showAdminTab('settings')" id="adm-nav-settings" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-[#3B2A1D] hover:text-white">
+          <i class="fa-solid fa-gear w-5"></i><span>Settings</span>
+        </button>
+      </nav>
+    </aside>
+
+    <div class="flex-grow flex flex-col overflow-hidden">
+      <div class="bg-[#FBF7EE] border-b border-[#E3D5B0] px-6 py-3 flex justify-between items-center flex-shrink-0">
+        <span class="text-xs text-[#7A6A55] font-medium" id="admin-db-status-label">
+          <i class="fa-solid fa-circle text-emerald-600 text-[9px] mr-1.5"></i> Connected to REST API
+        </span>
+        <button onclick="refreshAllData()" class="text-xs bg-[#E3ECE4] text-[#2F5D48] font-bold px-3 py-1.5 rounded-lg hover:bg-[#D4E3D6] transition">
+          <i class="fa-solid fa-rotate mr-1"></i> Refresh Data
+        </button>
+      </div>
+
+      <div class="flex-grow p-6 overflow-y-auto">
+        <!-- OVERVIEW TAB -->
+          <!-- LIVE ESP32 HARDWARE TELEMETRY WIDGET -->
+          <div class="bg-gradient-to-r from-[#241A12] to-[#3B2A1D] rounded-2xl p-5 border-2 border-[#B08D3F]/60 text-white shadow-xl relative overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-xl bg-[#2F5D48] text-[#F3E7C4] flex items-center justify-center text-2xl border border-[#B08D3F]/40 shadow">
+                  <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <h3 class="font-display font-bold text-base text-[#F3E7C4]">ESP32 Smart Locker & Shelf</h3>
+                    <span id="hw-live-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse">Waiting for Hardware...</span>
+                  </div>
+                  <p class="text-xs text-[#D9C9A8] mt-0.5">Live ultrasonic book detection & RFID locker + book tag synchronization</p>
+                </div>
+              </div>
+
+              <!-- Quick Stats Grid -->
+              <div class="flex flex-wrap items-center gap-3 text-xs font-mono">
+                <div class="bg-[#1C140D]/70 px-3 py-2 rounded-xl border border-[#B08D3F]/30">
+                  <span class="text-[10px] text-[#A69477] uppercase block">Shelf Books</span>
+                  <span id="hw-book-count" class="text-base font-bold text-[#F3E7C4]">0 Books</span>
+                </div>
+                <div class="bg-[#1C140D]/70 px-3 py-2 rounded-xl border border-[#B08D3F]/30">
+                  <span class="text-[10px] text-[#A69477] uppercase block">Distance</span>
+                  <span id="hw-distance" class="text-base font-bold text-[#C9A227]">-- cm</span>
+                </div>
+                <div class="bg-[#1C140D]/70 px-3 py-2 rounded-xl border border-[#B08D3F]/30">
+                  <span class="text-[10px] text-[#A69477] uppercase block">Member Card</span>
+                  <span id="hw-last-user" class="text-xs font-bold text-[#EFE6D2]">None</span>
+                </div>
+                <div class="bg-[#1C140D]/70 px-3 py-2 rounded-xl border border-[#B08D3F]/30">
+                  <span class="text-[10px] text-[#A69477] uppercase block">Book RFID Tag</span>
+                  <span id="hw-last-book" class="text-xs font-bold text-[#E3D5B0]">None</span>
+                </div>
+                <div class="bg-[#1C140D]/70 px-3 py-2 rounded-xl border border-[#B08D3F]/30">
+                  <span class="text-[10px] text-[#A69477] uppercase block">Action</span>
+                  <span id="hw-last-action" class="text-xs font-bold text-[#8FB89C]">Ready</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="bg-[#FBF7EE] p-5 rounded-xl shadow-sm border border-[#E3D5B0] flex justify-between items-center">
+              <div>
+                <p class="text-[11px] font-bold text-[#A69477] uppercase">Users</p>
+                <h3 id="stat-users" class="text-2xl font-black text-[#2B2420] mt-1">0</h3>
+              </div>
+              <div class="w-12 h-12 bg-[#E3ECE4] text-[#2F5D48] rounded-xl flex items-center justify-center text-lg"><i class="fa-solid fa-users"></i></div>
+            </div>
+            <div class="bg-[#FBF7EE] p-5 rounded-xl shadow-sm border border-[#E3D5B0] flex justify-between items-center">
+              <div>
+                <p class="text-[11px] font-bold text-[#A69477] uppercase">Total Books</p>
+                <h3 id="stat-books" class="text-2xl font-black text-[#2B2420] mt-1">0</h3>
+              </div>
+              <div class="w-12 h-12 bg-[#EAF1EA] text-[#2F5D48] rounded-xl flex items-center justify-center text-lg"><i class="fa-solid fa-book"></i></div>
+            </div>
+            <div class="bg-[#FBF7EE] p-5 rounded-xl shadow-sm border border-[#E3D5B0] flex justify-between items-center">
+              <div>
+                <p class="text-[11px] font-bold text-[#A69477] uppercase">Available Lockers</p>
+                <h3 id="stat-lockers" class="text-2xl font-black text-[#2B2420] mt-1">0</h3>
+              </div>
+              <div class="w-12 h-12 bg-[#FBF3DE] text-[#8A6B22] rounded-xl flex items-center justify-center text-lg"><i class="fa-solid fa-box-open"></i></div>
+            </div>
+            <div class="bg-[#FBF7EE] p-5 rounded-xl shadow-sm border border-[#E3D5B0] flex justify-between items-center">
+              <div>
+                <p class="text-[11px] font-bold text-[#A69477] uppercase">Transactions</p>
+                <h3 id="stat-tx" class="text-2xl font-black text-[#2B2420] mt-1">0</h3>
+              </div>
+              <div class="w-12 h-12 bg-[#EFE3D3] text-[#5C3A21] rounded-xl flex items-center justify-center text-lg"><i class="fa-solid fa-right-left"></i></div>
+            </div>
+          </div>
+
+          <div class="bg-[#FBF7EE] rounded-xl shadow-sm border border-[#E3D5B0] p-5">
+            <h3 class="font-bold text-[#2B2420] text-sm mb-4">Recent Transactions (Real-time)</h3>
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-[#F7F1E3] border-b text-[#7A6A55] uppercase font-bold">
+                  <th class="p-3">User</th><th class="p-3">Book</th><th class="p-3">Locker</th><th class="p-3">Action</th><th class="p-3">Date</th>
+                </tr>
+              </thead>
+              <tbody id="overview-tx-table" class="divide-y divide-[#E3D5B0]"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- MANAGE BOOKS TAB -->
+        <div id="admin-tab-books" class="hidden space-y-6">
+          <div class="flex justify-between items-center">
+            <h2 class="font-display text-2xl font-semibold text-[#2B2420]">Manage Books &amp; RFID Tags</h2>
+            <button onclick="openBookModal()" class="bg-[#2F5D48] hover:bg-[#234B3B] text-white text-xs font-bold px-4 py-2 rounded-lg shadow">
+              + Add Book
+            </button>
+          </div>
+          <div class="bg-[#FBF7EE] rounded-xl shadow-sm border border-[#E3D5B0] overflow-hidden">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-[#F7F1E3] border-b text-[#7A6A55] uppercase font-bold">
+                  <th class="p-3">ID</th><th class="p-3">Title</th><th class="p-3">Author</th><th class="p-3">Book RFID Tag</th><th class="p-3">Category</th><th class="p-3">Status / Borrower</th><th class="p-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="books-table-body" class="divide-y divide-[#E3D5B0]"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- LOCKERS TAB -->
+        <div id="admin-tab-lockers" class="hidden space-y-6">
+          <div class="flex justify-between items-center">
+            <h2 class="font-display text-2xl font-semibold text-[#2B2420]">Locker Status &amp; Management</h2>
+            <button onclick="openAddLockerPrompt()" class="bg-[#2F5D48] hover:bg-[#234B3B] text-white text-xs font-bold px-4 py-2 rounded-lg shadow">+ Add Locker</button>
+          </div>
+          <div id="lockers-grid-admin" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 mt-3"></div>
+        </div>
+
+        <!-- USERS TAB -->
+        <div id="admin-tab-users" class="hidden space-y-6">
+          <div class="flex justify-between items-center">
+            <h2 class="font-display text-2xl font-semibold text-[#2B2420]">Registered Users</h2>
+            <button onclick="openAddUserPrompt()" class="bg-[#2F5D48] hover:bg-[#234B3B] text-white text-xs font-bold px-4 py-2 rounded-lg shadow">+ Add User</button>
+          </div>
+          <div class="bg-[#FBF7EE] rounded-xl shadow-sm border border-[#E3D5B0] overflow-hidden">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-[#F7F1E3] border-b text-[#7A6A55] uppercase font-bold">
+                  <th class="p-3">ID</th><th class="p-3">Name</th><th class="p-3">Role</th><th class="p-3">Member RFID</th><th class="p-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body" class="divide-y divide-[#E3D5B0]"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RFID CARDS TAB -->
+        <div id="admin-tab-rfid" class="hidden space-y-6">
+          <div class="flex justify-between items-center">
+            <h2 class="font-display text-2xl font-semibold text-[#2B2420]">RFID Cards &amp; Book Tags Registry</h2>
+            <button onclick="openAddRfidPrompt()" class="bg-[#3A4A5C] hover:bg-[#2C3A48] text-white text-xs font-bold px-4 py-2 rounded-lg shadow">+ Register Card</button>
+          </div>
+          <div class="bg-[#FBF7EE] rounded-xl shadow-sm border border-[#E3D5B0] overflow-hidden">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-[#F7F1E3] border-b text-[#7A6A55] uppercase font-bold">
+                  <th class="p-3">Card / Tag UID</th><th class="p-3">Type</th><th class="p-3">Assigned To</th><th class="p-3">Status</th><th class="p-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="rfid-table-body" class="divide-y divide-[#E3D5B0]"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TRANSACTIONS TAB -->
+        <div id="admin-tab-transactions" class="hidden space-y-6">
+          <h2 class="font-display text-2xl font-semibold text-[#2B2420]">Transaction History Log (Live)</h2>
+          <div class="bg-[#FBF7EE] rounded-xl shadow-sm border border-[#E3D5B0] overflow-hidden">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-[#F7F1E3] border-b text-[#7A6A55] uppercase font-bold">
+                  <th class="p-3">ID</th><th class="p-3">Borrower</th><th class="p-3">Member Card</th><th class="p-3">Book Title</th><th class="p-3">Book Tag UID</th><th class="p-3">Locker</th><th class="p-3">Type</th><th class="p-3">Timestamp</th><th class="p-3">Due Date</th>
+                </tr>
+              </thead>
+              <tbody id="full-tx-table-body" class="divide-y divide-[#E3D5B0]"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- REPORTS TAB -->
+        <div id="admin-tab-reports" class="hidden space-y-6">
+          <h2 class="font-display text-2xl font-semibold text-[#2B2420]">System Analytics &amp; Reports</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-[#FBF7EE] p-6 rounded-xl border border-[#E3D5B0] shadow-sm">
+              <h3 class="font-bold text-sm text-[#2B2420] mb-4">Locker Utilization Summary</h3>
+              <div id="report-utilization" class="space-y-3 text-xs"></div>
+            </div>
+            <div class="bg-[#FBF7EE] p-6 rounded-xl border border-[#E3D5B0] shadow-sm">
+              <h3 class="font-bold text-sm text-[#2B2420] mb-4">System Activity Metrics</h3>
+              <div id="report-activity" class="space-y-3 text-xs"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTIFICATIONS TAB -->
+        <div id="admin-tab-notifications" class="hidden space-y-6">
+          <h2 class="font-display text-2xl font-semibold text-[#2B2420]">Notifications</h2>
+          <div id="admin-notif-list" class="space-y-3"></div>
+        </div>
+
+        <!-- SETTINGS TAB -->
+        <div id="admin-tab-settings" class="hidden space-y-6">
+          <h2 class="font-display text-2xl font-semibold text-[#2B2420]">System Settings</h2>
+          <div class="bg-[#FBF7EE] p-6 rounded-xl border border-[#E3D5B0] shadow-sm max-w-2xl space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-[#3D332A] mb-1">Borrowing Period (Days)</label>
+              <input type="number" id="sett-borrow-period" value="7" min="1" class="w-full p-2 border border-[#E3D5B0] rounded-lg text-xs bg-[#FBF7EE]">
+            </div>
+            <button onclick="saveSettingsForm()" class="bg-[#2F5D48] hover:bg-[#234B3B] text-white font-bold text-xs px-5 py-2.5 rounded-lg shadow">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- BACKEND CONFIG MODAL -->
+  <!-- ========================================================================= -->
+  <div id="api-config-modal" class="fixed inset-0 bg-[#1C140D]/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-[#FBF7EE] rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-[#E3D5B0]">
+      <div class="flex items-center space-x-3 mb-4">
+        <div class="w-10 h-10 bg-[#E3ECE4] text-[#2F5D48] rounded-xl flex items-center justify-center text-lg"><i class="fa-solid fa-server"></i></div>
+        <div>
+          <h3 class="text-base font-bold text-[#1F1710]">Render Backend Configuration</h3>
+          <p class="text-xs text-[#7A6A55]">Connect frontend to your deployed Render REST API</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-[#5C4D3D] mb-1">Backend API Base URL</label>
+          <input type="text" id="input-backend-url" class="w-full p-2.5 border border-[#E3D5B0] rounded-lg bg-white font-mono text-xs focus:ring-2 focus:ring-[#2F5D48]" placeholder="https://your-app-name.onrender.com">
+          <p class="text-[11px] text-[#A69477] mt-1">Default for local: <code class="bg-[#EFE6D2] px-1 py-0.5 rounded">http://localhost:5000</code></p>
+        </div>
+
+        <div id="ping-test-result" class="p-3 rounded-lg border hidden text-xs font-mono"></div>
+
+        <div class="flex justify-between items-center pt-2">
+          <button type="button" onclick="testBackendPing()" class="px-4 py-2 bg-[#E3ECE4] hover:bg-[#D4E3D6] text-[#2F5D48] font-bold rounded-lg transition">
+            <i class="fa-solid fa-bolt mr-1"></i> Test Connection
+          </button>
+          <div class="space-x-2">
+            <button type="button" onclick="closeApiConfigModal()" class="px-4 py-2 bg-[#EFE6D2] text-[#3D332A] font-bold rounded-lg">Cancel</button>
+            <button type="button" onclick="saveBackendUrl()" class="px-4 py-2 bg-[#2F5D48] hover:bg-[#234B3B] text-white font-bold rounded-lg shadow">Save &amp; Connect</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT BOOK MODAL -->
+  <div id="book-modal" class="fixed inset-0 bg-[#1C140D]/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-[#FBF7EE] rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <h3 id="modal-book-title" class="text-base font-bold text-[#1F1710] mb-4">Add New Book</h3>
+      <form onsubmit="handleBookFormSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="book-edit-id">
+        <div>
+          <label class="block font-bold text-[#5C4D3D] mb-1">Book Title *</label>
+          <input type="text" id="form-book-title" required class="w-full p-2 border border-[#E3D5B0] rounded-lg bg-[#FBF7EE]">
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C4D3D] mb-1">Author Name *</label>
+          <input type="text" id="form-book-author" required class="w-full p-2 border border-[#E3D5B0] rounded-lg bg-[#FBF7EE]">
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C4D3D] mb-1">Book RFID Tag / Card UID</label>
+          <input type="text" id="form-book-rfid" placeholder="e.g. BK-101 or Card UID" class="w-full p-2 border border-[#E3D5B0] rounded-lg bg-[#FBF7EE]">
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C4D3D] mb-1">Category *</label>
+          <input type="text" id="form-book-category" required class="w-full p-2 border border-[#E3D5B0] rounded-lg bg-[#FBF7EE]">
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C4D3D] mb-1">Status</label>
+          <select id="form-book-status" class="w-full p-2 border border-[#E3D5B0] rounded-lg bg-[#FBF7EE]">
+            <option value="Available">Available</option>
+            <option value="Borrowed">Borrowed</option>
+          </select>
+        </div>
+        <div class="flex justify-end space-x-2 pt-4">
+          <button type="button" onclick="closeBookModal()" class="px-4 py-2 bg-[#EFE6D2] text-[#3D332A] font-bold rounded-lg">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-[#2F5D48] hover:bg-[#234B3B] text-white font-bold rounded-lg shadow">Save Book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    let state = {
+      users: [],
+      books: [],
+      lockers: [],
+      transactions: [],
+      notifications: [],
+      rfidCards: [],
+      hardware: null,
+      currentActiveRfid: 'DB 39 EA 06'
+    };
+
+    async function checkBackendHealth() {
+      const dot = document.getElementById('backend-status-dot');
+      const text = document.getElementById('backend-status-text');
+      const res = await window.apiClient.ping();
+      
+      if (res.online) {
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
+        text.innerText = 'Render API: Online';
+      } else {
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500';
+        text.innerText = 'Render API: Offline';
+      }
+    }
+
+    async function refreshAllData() {
+      try {
+        const [users, books, lockers, transactions, notifications, rfidCards, hardware] = await Promise.all([
+          window.apiClient.getUsers(),
+          window.apiClient.getBooks(),
+          window.apiClient.getLockers(),
+          window.apiClient.getTransactions(),
+          window.apiClient.getNotifications(),
+          window.apiClient.getRfidCards(),
+          window.apiClient.getHardwareStatus()
+        ]);
+
+        state.users = users;
+        state.books = books;
+        state.lockers = lockers;
+        state.transactions = transactions;
+        state.notifications = notifications;
+        state.rfidCards = rfidCards;
+        state.hardware = hardware;
+
+        if (state.rfidCards.length > 0 && !state.currentActiveRfid) {
+          state.currentActiveRfid = state.rfidCards[0].uid;
+        }
+
+        renderAdminDashboard();
+        renderMobileLockers();
+        populateRfidDropdown();
+        checkBackendHealth();
+      } catch (err) {
+        console.error('Data refresh error:', err);
+        checkBackendHealth();
+      }
+    }
+
+    // ==========================================
+    // UI SWITCHING
+    // ==========================================
+    function switchMainView(view) {
+      ['mobile', 'admin'].forEach(v => {
+        document.getElementById('view-' + v).classList.add('hidden');
+        document.getElementById('btn-view-' + v).className = "px-3.5 py-1.5 rounded-lg text-[#A69477] hover:text-white transition";
+      });
+
+      document.getElementById('view-' + view).classList.remove('hidden');
+      document.getElementById('btn-view-' + view).className = "px-3.5 py-1.5 rounded-lg text-white bg-[#2F5D48] transition shadow";
+
+      if (view === 'admin') renderAdminDashboard();
+      if (view === 'mobile') renderMobileLockers();
+    }
+
+    function showMobileScreen(screen) {
+      ['home', 'rfid', 'exchange', 'transactions', 'notifications', 'help'].forEach(s => {
+        document.getElementById('mob-screen-' + s).classList.add('hidden');
+      });
+      document.getElementById('mob-screen-' + screen).classList.remove('hidden');
+
+      const titleEl = document.getElementById('mobile-title');
+      const backBtn = document.getElementById('mobile-back-btn');
+
+      if (screen === 'home') {
+        titleEl.innerText = "Book Exchange Locker";
+        backBtn.classList.add('hidden');
+      } else {
+        backBtn.classList.remove('hidden');
+        if (screen === 'rfid') titleEl.innerText = "RFID Scan";
+        if (screen === 'exchange') titleEl.innerText = "Available Lockers";
+        if (screen === 'transactions') titleEl.innerText = "Borrowed & Returned";
+        if (screen === 'notifications') titleEl.innerText = "Notifications";
+        if (screen === 'help') titleEl.innerText = "Help & Guide";
+      }
+
+      if (screen === 'rfid') populateRfidDropdown();
+      if (screen === 'exchange') renderMobileLockers();
+      if (screen === 'transactions') renderMobileTx();
+      if (screen === 'notifications') renderMobileNotifications();
+    }
+
+    function populateRfidDropdown() {
+      const select = document.getElementById('rfid-select-card');
+      select.innerHTML = state.rfidCards.map(c => {
+        const user = state.users.find(u => u.id === c.user_id);
+        return `<option value="${c.uid}" ${c.uid === state.currentActiveRfid ? 'selected' : ''}>${c.uid} - ${user ? user.name : 'Unassigned'}</option>`;
+      }).join('');
+      updateRfidUserCard();
+    }
+
+    function updateRfidUserCard() {
+      state.currentActiveRfid = document.getElementById('rfid-select-card').value;
+      const card = state.rfidCards.find(c => c.uid === state.currentActiveRfid);
+      const user = state.users.find(u => u.id === card?.user_id);
+      document.getElementById('rfid-auth-user').innerText = `Welcome, ${user ? user.name : 'User'}!`;
+    }
+
+    function renderMobileLockers() {
+      const container = document.getElementById('mobile-lockers-container');
+      container.innerHTML = '';
+      state.lockers.forEach(l => {
+        const isAvail = l.status === 'Available';
+        const b = state.books.find(item => item.id == l.current_book_id);
+        const card = document.createElement('div');
+        card.onclick = () => selectMobileLocker(l.id);
+        card.className = `relative rounded-md text-center cursor-pointer border-2 ${isAvail ? 'border-[#B08D3F]' : 'border-[#2A1D14]'} p-3 pt-5 shadow-md transition hover:-translate-y-0.5 hover:shadow-lg`;
+        card.style.background = isAvail ? 'linear-gradient(180deg,#6B4A30,#5C3A21)' : 'linear-gradient(180deg,#3B2A1D,#2A1D14)';
+        card.innerHTML = `
+          <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-[#F3E7C4] border border-[#8A6B22] rounded-sm px-2 py-0.5 shadow whitespace-nowrap">
+            <span class="font-plate text-[10px] font-bold text-[#5C3A21]">LOCKER ${l.id}</span>
+          </div>
+          <div class="w-2 h-2 mx-auto rounded-full ${isAvail ? 'bg-[#D9BB57]' : 'bg-[#6B5B45]'} shadow-inner mt-1"></div>
+          <div class="text-[9px] font-bold mt-2 tracking-wide ${isAvail ? 'text-[#F3E7C4]' : 'text-[#C99A8D]'}">${l.status}</div>
+          <div class="text-[9px] mt-1 leading-tight truncate ${isAvail ? 'text-[#E3D5B0]' : 'text-[#8A7A63]'}">${isAvail ? (b ? b.title : 'Empty') : 'Checked out'}</div>
+        `;
+        container.appendChild(card);
+      });
+
+      if (state.lockers.length > 0) selectMobileLocker(state.lockers[0].id);
+    }
+
+    function selectMobileLocker(id) {
+      document.getElementById('selected-locker-id').innerText = id;
+      const l = state.lockers.find(item => item.id == id);
+      const isAvail = l?.status === 'Available';
+      const b = state.books.find(item => item.id == l?.current_book_id) || { title: 'No Book', author: 'N/A', category: 'N/A' };
+      document.getElementById('selected-book-details').innerHTML = `
+        <h4 class="font-bold text-[#1F1710] text-xs">${isAvail ? b.title : 'Locker Occupied — no book to borrow'}</h4>
+        <p class="text-[11px] text-[#7A6A55]">${isAvail ? b.author : ''}</p>
+        <p class="text-[10px] font-semibold text-[#2F5D48] mt-0.5">${isAvail ? 'Category: ' + b.category : ''}</p>
+      `;
+    }
+
+    async function actionBook(actionType) {
+      const lockerId = parseInt(document.getElementById('selected-locker-id').innerText);
+      const locker = state.lockers.find(l => l.id === lockerId);
+      const card = state.rfidCards.find(c => c.uid === state.currentActiveRfid);
+      const user = state.users.find(u => u.id === card?.user_id) || state.users[0];
+
+      if (actionType === 'borrow') {
+        if (!locker || locker.status !== 'Available' || !locker.current_book_id) {
+          alert('This locker has no book available to borrow.');
+          return;
+        }
+        try {
+          const res = await window.apiClient.borrowBook({
+            userId: user.id,
+            bookId: locker.current_book_id,
+            lockerId: locker.id,
+            borrowDays: 7
+          });
+          alert(`Success! Locker ${locker.id} opened. Book borrowed until ${res.dueDate}.`);
+          await refreshAllData();
+        } catch (err) {
+          alert('Borrow failed: ' + err.message);
+        }
+      } else {
+        if (!locker || locker.status !== 'Occupied') {
+          alert('This locker is not currently marked as occupied.');
+          return;
+        }
+        try {
+          await window.apiClient.returnBook({
+            userId: user.id,
+            bookId: locker.current_book_id || '1',
+            lockerId: locker.id
+          });
+          alert(`Success! Locker ${locker.id} opened for return.`);
+          await refreshAllData();
+        } catch (err) {
+          alert('Return failed: ' + err.message);
+        }
+      }
+    }
+
+    function renderMobileTx() {
+      const container = document.getElementById('mobile-tx-list');
+      container.innerHTML = '';
+      state.transactions.slice().reverse().forEach(t => {
+        const book = state.books.find(b => b.id === t.book_id);
+        const div = document.createElement('div');
+        div.className = "bg-[#FBF7EE] p-3 rounded-xl shadow-sm border border-[#E3D5B0] flex justify-between items-center text-xs";
+        const dueInfo = (t.type === 'Borrowed' && t.due_date) ? `<span class="inline-block mt-1 text-[9px] font-bold text-[#8B3A3A] border border-[#8B3A3A]/60 rounded px-1.5 py-0.5 font-plate tracking-wide">DUE ${t.due_date}</span>` : '';
+        div.innerHTML = `
+          <div>
+            <h4 class="font-bold text-[#2B2420]">${book ? book.title : t.book_title || 'Book ' + t.book_id}</h4>
+            <p class="text-[10px] text-[#7A6A55]">Locker ${t.locker_id} • ${t.transaction_time}</p>
+            ${dueInfo}
+          </div>
+          <span class="text-[10px] ${t.type === 'Returned' ? 'bg-[#DCEADC] text-[#234B3B]' : 'bg-[#F3E7C4] text-[#7A5B12]'} font-bold px-2 py-0.5 rounded whitespace-nowrap">${t.type}</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function renderMobileNotifications() {
+      const container = document.getElementById('mobile-notif-list');
+      container.innerHTML = '';
+      if (state.notifications.length === 0) {
+        container.innerHTML = `<p class="text-xs text-[#7A6A55] text-center py-6">No notifications yet.</p>`;
+      } else {
+        state.notifications.slice().reverse().forEach(n => {
+          const div = document.createElement('div');
+          div.className = "bg-[#FBF7EE] p-3 rounded-xl shadow-sm border border-[#E3D5B0] text-xs flex items-start space-x-3";
+          div.innerHTML = `
+            <div class="bg-[#E3ECE4] text-[#2F5D48] p-2 rounded-full mt-0.5"><i class="fa-solid fa-bell"></i></div>
+            <div>
+              <p class="font-semibold text-[#2B2420]">${n.text}</p>
+              <p class="text-[10px] text-[#A69477] mt-0.5">${n.created_at || 'Recently'}</p>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      }
+    }
+
+    // ==========================================
+    // ADMIN DASHBOARD RENDERING
+    // ==========================================
+    function showAdminTab(tab) {
+      ['overview', 'books', 'lockers', 'users', 'rfid', 'transactions', 'notifications', 'reports', 'settings'].forEach(t => {
+        const el = document.getElementById('admin-tab-' + t);
+        if (el) el.classList.add('hidden');
+        const navEl = document.getElementById('adm-nav-' + t);
+        if (navEl) navEl.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-[#3B2A1D] hover:text-white";
+      });
+
+      document.getElementById('admin-tab-' + tab).classList.remove('hidden');
+      const activeNav = document.getElementById('adm-nav-' + tab);
+      if (activeNav) activeNav.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-[#2F5D48] text-white font-semibold";
+      renderAdminDashboard();
+    }
+
+    function renderAdminDashboard() {
+      document.getElementById('stat-users').innerText = state.users.length;
+      document.getElementById('stat-books').innerText = state.books.length;
+      document.getElementById('stat-lockers').innerText = state.lockers.filter(l => l.status === 'Available').length;
+      document.getElementById('stat-tx').innerText = state.transactions.length;
+
+      // Update Live Hardware Telemetry
+      if (state.hardware) {
+        const hw = state.hardware;
+        const badge = document.getElementById('hw-live-badge');
+        if (hw.isOnline) {
+          badge.className = "px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+          badge.innerText = "● ESP32 Hardware Online";
+        } else {
+          badge.className = "px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+          badge.innerText = "○ Standby / Waiting";
+        }
+
+        document.getElementById('hw-book-count').innerText = `${hw.bookCount || 0} Books`;
+        document.getElementById('hw-distance').innerText = hw.distanceCm > 0 ? `${hw.distanceCm.toFixed(1)} cm` : '-- cm';
+        document.getElementById('hw-last-user').innerText = hw.lastUserCard || 'None';
+        document.getElementById('hw-last-book').innerText = hw.lastBookTag || 'None';
+        document.getElementById('hw-last-action').innerText = hw.lastAction || 'Ready';
+      }
+
+      // Books
+      const booksTbody = document.getElementById('books-table-body');
+      booksTbody.innerHTML = state.books.map(b => {
+        const isBorrowed = b.status === 'Borrowed';
+        return `
+        <tr class="hover:bg-[#F7F1E3]">
+          <td class="p-3 font-mono font-bold">${b.id}</td>
+          <td class="p-3 font-bold text-[#2B2420]">${b.title}</td>
+          <td class="p-3">${b.author}</td>
+          <td class="p-3"><span class="font-mono text-[11px] bg-[#EFE6D2] text-[#5C3A21] px-2 py-0.5 rounded border border-[#B08D3F]/40 font-bold">${b.rfid_tag || 'Unassigned'}</span></td>
+          <td class="p-3">${b.category}</td>
+          <td class="p-3">
+            <span class="${isBorrowed ? 'bg-[#F6E7BE] text-[#8A6B22]' : 'bg-[#DCEADC] text-[#234B3B]'} font-bold px-2 py-0.5 rounded">${b.status}</span>
+            ${isBorrowed && b.borrowed_by ? `<span class="block text-[10px] text-[#7A2F2F] mt-1 font-semibold"><i class="fa-solid fa-user text-[9px] mr-1"></i>${b.borrowed_by}</span>` : ''}
+          </td>
+          <td class="p-3 space-x-2">
+            <button onclick="editBookModal('${b.id}')" class="text-[#2F5D48] hover:text-[#1A362A]"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button onclick="deleteBookAction('${b.id}')" class="text-[#7A2F2F] hover:text-[#5C2323]"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `;}).join('');
+
+      // Lockers
+      const lockersGrid = document.getElementById('lockers-grid-admin');
+      lockersGrid.innerHTML = state.lockers.map(l => {
+        const isAvail = l.status === 'Available';
+        const b = state.books.find(item => item.id == l.current_book_id);
+        return `
+          <div class="relative rounded-lg text-center shadow-md border-2 ${isAvail ? 'border-[#B08D3F]' : 'border-[#2A1D14]'} p-4 pt-6" style="background: ${isAvail ? 'linear-gradient(180deg,#6B4A30,#5C3A21)' : 'linear-gradient(180deg,#3B2A1D,#2A1D14)'}">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#F3E7C4] border border-[#8A6B22] rounded-sm px-3 py-0.5 shadow whitespace-nowrap">
+              <span class="font-plate text-xs font-bold text-[#5C3A21]">LOCKER ${l.id}</span>
+            </div>
+            <div class="w-2.5 h-2.5 mx-auto rounded-full ${isAvail ? 'bg-[#D9BB57]' : 'bg-[#6B5B45]'} shadow-inner mt-1"></div>
+            <span class="inline-block my-2 font-bold text-xs tracking-wide ${isAvail ? 'text-[#F3E7C4]' : 'text-[#C99A8D]'}">${l.status}</span>
+            <p class="text-[11px] ${isAvail ? 'text-[#E3D5B0]' : 'text-[#8A7A63]'} truncate">${isAvail ? (b ? b.title : 'Empty') : 'Checked out'}</p>
+            <div class="mt-3 flex justify-center space-x-1">
+              <button onclick="toggleLockerAction(${l.id})" class="text-[10px] bg-[#F3E7C4] text-[#5C3A21] font-bold px-2 py-1 rounded">Toggle</button>
+              <button onclick="deleteLockerAction(${l.id})" class="text-[10px] bg-[#8B3A3A] text-white px-2 py-1 rounded">Delete</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Users
+      const usersTbody = document.getElementById('users-table-body');
+      usersTbody.innerHTML = state.users.map(u => `
+        <tr class="hover:bg-[#F7F1E3]">
+          <td class="p-3 font-mono font-bold">${u.id}</td>
+          <td class="p-3 font-bold">${u.name}</td>
+          <td class="p-3">${u.role}</td>
+          <td class="p-3"><span class="font-mono text-[11px] bg-[#E3ECE4] text-[#2F5D48] px-2 py-0.5 rounded border border-[#BFD3C4] font-bold">${u.rfid_tag || 'No Card'}</span></td>
+          <td class="p-3"><button onclick="deleteUserAction('${u.id}')" class="text-[#7A2F2F]"><i class="fa-solid fa-trash"></i></button></td>
+        </tr>
+      `).join('');
+
+      // RFID
+      const rfidTbody = document.getElementById('rfid-table-body');
+      rfidTbody.innerHTML = state.rfidCards.map(c => `
+        <tr class="hover:bg-[#F7F1E3]">
+          <td class="p-3 font-mono font-bold">${c.uid}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.type === 'BOOK_TAG' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}">${c.type || 'USER_CARD'}</span></td>
+          <td class="p-3 font-mono text-xs">${c.book_id ? `Book #${c.book_id}` : (c.user_id ? `User #${c.user_id}` : 'Unassigned')}</td>
+          <td class="p-3"><span class="bg-[#DCEADC] text-[#234B3B] font-bold px-2 py-0.5 rounded">${c.status || 'Active'}</span></td>
+          <td class="p-3"><button onclick="deleteRfidAction('${c.uid}')" class="text-[#7A2F2F]"><i class="fa-solid fa-trash"></i></button></td>
+        </tr>
+      `).join('');
+
+      // Transactions
+      const overviewTx = document.getElementById('overview-tx-table');
+      const fullTx = document.getElementById('full-tx-table-body');
+      overviewTx.innerHTML = '';
+      fullTx.innerHTML = '';
+
+      state.transactions.slice().reverse().forEach((t, index) => {
+        const u = state.users.find(item => item.id === t.user_id);
+        const b = state.books.find(item => item.id === t.book_id);
+        const borrowerName = t.user_name || (u ? u.name : `User #${t.user_id}`);
+        const userCard = t.user_card_uid || (u ? u.rfid_tag : '—');
+        const bookTitle = t.book_title || (b ? b.title : `Book #${t.book_id}`);
+        const bookTag = t.book_tag_uid || (b ? b.rfid_tag : '—');
+        const isReturn = (t.type === 'RETURN' || t.type === 'Returned');
+        const timeStr = t.timestamp ? new Date(t.timestamp).toLocaleString() : (t.transaction_time || 'Just now');
+        const dueDateStr = t.due_date ? new Date(t.due_date).toLocaleDateString() : '—';
+
+        if (index < 5) {
+          overviewTx.innerHTML += `
+            <tr class="hover:bg-[#F7F1E3]">
+              <td class="p-3 font-semibold text-[#2B2420]">${borrowerName}</td>
+              <td class="p-3">${bookTitle}</td>
+              <td class="p-3 font-mono">${t.locker_id}</td>
+              <td class="p-3"><span class="${isReturn ? 'bg-[#DCEADC] text-[#234B3B]' : 'bg-[#F3E7C4] text-[#7A5B12]'} font-bold px-2 py-0.5 rounded">${t.type}</span></td>
+              <td class="p-3 text-[#A69477]">${timeStr}</td>
+            </tr>
+          `;
+        }
+
+        fullTx.innerHTML += `
+          <tr class="hover:bg-[#F7F1E3]">
+            <td class="p-3 font-mono font-bold">${t.id}</td>
+            <td class="p-3 font-semibold text-[#2B2420]">${borrowerName}</td>
+            <td class="p-3 font-mono text-[11px] text-[#5C3A21]">${userCard}</td>
+            <td class="p-3 font-semibold">${bookTitle}</td>
+            <td class="p-3 font-mono text-[11px] text-[#2F5D48]">${bookTag}</td>
+            <td class="p-3 font-mono">${t.locker_id}</td>
+            <td class="p-3"><span class="${isReturn ? 'bg-[#DCEADC] text-[#234B3B]' : 'bg-[#F3E7C4] text-[#7A5B12]'} font-bold px-2 py-0.5 rounded">${t.type}</span></td>
+            <td class="p-3 text-[#7A6A55]">${timeStr}</td>
+            <td class="p-3 ${t.due_date ? 'text-[#8A6B22] font-semibold' : 'text-[#D9C9A8]'}">${dueDateStr}</td>
+          </tr>
+        `;
+      });
+
+      // Reports
+      document.getElementById('report-utilization').innerHTML = `
+        <div class="flex justify-between border-b border-[#E3D5B0] pb-1.5"><span>Total Lockers:</span><b>${state.lockers.length}</b></div>
+        <div class="flex justify-between border-b border-[#E3D5B0] pb-1.5"><span>Available Lockers:</span><b class="text-[#2F5D48]">${state.lockers.filter(l => l.status === 'Available').length}</b></div>
+        <div class="flex justify-between border-b border-[#E3D5B0] pb-1.5"><span>Occupied Lockers:</span><b class="text-[#7A2F2F]">${state.lockers.filter(l => l.status === 'Occupied').length}</b></div>
+      `;
+      document.getElementById('report-activity').innerHTML = `
+        <div class="flex justify-between border-b border-[#E3D5B0] pb-1.5"><span>Total Registered Users:</span><b>${state.users.length}</b></div>
+        <div class="flex justify-between border-b border-[#E3D5B0] pb-1.5"><span>Total Registered Books:</span><b>${state.books.length}</b></div>
+        <div class="flex justify-between border-b border-[#E3D5B0] pb-1.5"><span>Total Transactions:</span><b>${state.transactions.length}</b></div>
+      `;
+    }
+
+    // Book Actions
+    function openBookModal() {
+      document.getElementById('modal-book-title').innerText = "Add New Book";
+      document.getElementById('book-edit-id').value = '';
+      document.getElementById('form-book-title').value = '';
+      document.getElementById('form-book-author').value = '';
+      document.getElementById('form-book-rfid').value = '';
+      document.getElementById('form-book-category').value = '';
+      document.getElementById('book-modal').classList.remove('hidden');
+    }
+
+    function closeBookModal() {
+      document.getElementById('book-modal').classList.add('hidden');
+    }
+
+    async function handleBookFormSubmit(e) {
+      e.preventDefault();
+      const editId = document.getElementById('book-edit-id').value;
+      const title = document.getElementById('form-book-title').value;
+      const author = document.getElementById('form-book-author').value;
+      const rfid_tag = document.getElementById('form-book-rfid').value;
+      const category = document.getElementById('form-book-category').value;
+      const status = document.getElementById('form-book-status').value;
+
+      try {
+        if (editId) {
+          await window.apiClient.updateBook(editId, { title, author, rfid_tag, category, status });
+        } else {
+          await window.apiClient.createBook({ title, author, rfid_tag, category, status });
+        }
+        closeBookModal();
+        await refreshAllData();
+      } catch (err) {
+        alert('Failed to save book: ' + err.message);
+      }
+    }
+
+    function editBookModal(id) {
+      const book = state.books.find(b => b.id == id);
+      if (book) {
+        document.getElementById('modal-book-title').innerText = "Edit Book";
+        document.getElementById('book-edit-id').value = book.id;
+        document.getElementById('form-book-title').value = book.title;
+        document.getElementById('form-book-author').value = book.author;
+        document.getElementById('form-book-rfid').value = book.rfid_tag || '';
+        document.getElementById('form-book-category').value = book.category;
+        document.getElementById('form-book-status').value = book.status;
+        document.getElementById('book-modal').classList.remove('hidden');
+      }
+    }
+
+    async function deleteBookAction(id) {
+      if (confirm('Delete this book?')) {
+        await window.apiClient.deleteBook(id);
+        await refreshAllData();
+      }
+    }
+
+    async function toggleLockerAction(id) {
+      await window.apiClient.toggleLocker(id);
+      await refreshAllData();
+    }
+
+    async function deleteLockerAction(id) {
+      if (confirm('Delete Locker ' + id + '?')) {
+        await window.apiClient.deleteLocker(id);
+        await refreshAllData();
+      }
+    }
+
+    async function openAddLockerPrompt() {
+      const id = prompt('Enter new Locker Number:');
+      if (id) {
+        await window.apiClient.createLocker({ id: parseInt(id), status: 'Available' });
+        await refreshAllData();
+      }
+    }
+
+    async function openAddUserPrompt() {
+      const name = prompt('User Name:');
+      const rfid = prompt('RFID Tag UID (e.g. RF-12345):');
+      if (name && rfid) {
+        await window.apiClient.createUser({ name, rfid_tag: rfid });
+        await refreshAllData();
+      }
+    }
+
+    async function deleteUserAction(id) {
+      if (confirm('Delete user ' + id + '?')) {
+        await window.apiClient.deleteUser(id);
+        await refreshAllData();
+      }
+    }
+
+    async function openAddRfidPrompt() {
+      const uid = prompt('Card UID:');
+      const userId = prompt('Assign to User ID (optional):');
+      if (uid) {
+        await window.apiClient.createRfidCard({ uid, user_id: userId || null });
+        await refreshAllData();
+      }
+    }
+
+    async function deleteRfidAction(uid) {
+      if (confirm('Delete RFID Card ' + uid + '?')) {
+        await window.apiClient.deleteRfidCard(uid);
+        await refreshAllData();
+      }
+    }
+
+    // ==========================================
+    // BACKEND CONFIG MODAL
+    // ==========================================
+    function openApiConfigModal() {
+      document.getElementById('input-backend-url').value = window.apiClient.getBaseUrl();
+      document.getElementById('ping-test-result').classList.add('hidden');
+      document.getElementById('api-config-modal').classList.remove('hidden');
+    }
+
+    function closeApiConfigModal() {
+      document.getElementById('api-config-modal').classList.add('hidden');
+    }
+
+    async function testBackendPing() {
+      const url = document.getElementById('input-backend-url').value;
+      const resultDiv = document.getElementById('ping-test-result');
+      resultDiv.classList.remove('hidden');
+      resultDiv.className = "p-3 rounded-lg border text-xs font-mono bg-amber-50 border-amber-300 text-amber-900";
+      resultDiv.innerText = 'Pinging ' + url + ' ...';
+
+      const tempClient = new ApiClient();
+      tempClient.setBaseUrl(url);
+      const res = await tempClient.ping();
+
+      if (res.online) {
+        resultDiv.className = "p-3 rounded-lg border text-xs font-mono bg-emerald-50 border-emerald-300 text-emerald-900";
+        resultDiv.innerText = '✅ Success! Server responded: ' + JSON.stringify(res.data);
+      } else {
+        resultDiv.className = "p-3 rounded-lg border text-xs font-mono bg-rose-50 border-rose-300 text-rose-900";
+        resultDiv.innerText = '❌ Connection failed: ' + res.error;
+      }
+    }
+
+    function saveBackendUrl() {
+      const url = document.getElementById('input-backend-url').value;
+      window.apiClient.setBaseUrl(url);
+      closeApiConfigModal();
+      refreshAllData();
+    }
+
+    // Initialize
+    refreshAllData();
+    switchMainView('admin');
+    // Auto-poll live hardware data every 3 seconds
+    setInterval(refreshAllData, 3000);
+  </script>
+</body>
+</html>
